@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: abolfazl-pod
+  labels:
+     salam: khodafez
+spec:
+  containers:
+    - name: test-code
+      image: abolfazlyarian/database-manager
+  serviceAccountName: dbmanger
