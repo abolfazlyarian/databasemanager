@@ -18,10 +18,10 @@ stream = watch.Watch()
 i = 0
 print("---------------------- Running ------------------")
 for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
-    print("---------------------- Running ------------------")
+    # print("---------------------- Running ------------------")
     # Check if the event is of type 'ADDED' or 'MODIFIED'
-    print(f"------------------------ Event {i} ------------------------")
-    print(event)
+    # print(f"------------------------ Event {i} ------------------------")
+    # print(event)
     if event['type'] in ['ADDED']: # = MODIFIED
         deployment = event['object']
         # print(f"------------------------ deployment {i} ------------------------")
