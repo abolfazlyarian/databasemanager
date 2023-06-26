@@ -1,5 +1,5 @@
 from kubernetes import client, config, watch
-import time
+import logging
 # Load Kubernetes configuration from default location
 #config.load_kube_config(config_file="/home/user01/.kube/config")
 config.load_incluster_config()
@@ -15,26 +15,35 @@ resource_type = 'deployments'
 stream = watch.Watch()
 
 # Iterate through events
-for event in stream.stream(api_instance.list_namespaced_deployment, namespace, _request_timeout=60):
+i = 0
+print("---------------------- Running ------------------")
+for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
+    print("---------------------- Running ------------------")
     # Check if the event is of type 'ADDED' or 'MODIFIED'
-    print("---------------------------- Event ------------------------------------")
+    print(f"------------------------ Event {i} ------------------------")
     print(event)
-    if event['type'] in ['ADDED', 'MODIFIED']:
+    if event['type'] in ['ADDED']: # = MODIFIED
         deployment = event['object']
-        print("---------------------------- deployment -------------------------------")
-        print(deployment)
+        # print(f"------------------------ deployment {i} ------------------------")
+        # print(deployment)
         # Extract annotations from metadata
         annotations = deployment.metadata.annotations
-        print("---------------------------- annotation -------------------------------")
-        print(annotations)
+        # print(f"------------------------ annotation {i} ------------------------")
+        # print(annotations)
 
         # Check if the required annotations exist
-#        if 'postgresql.db' in annotations and 'postgresql.user' in annotations:
-#            db_name = annotations['postgresql.db']
-#            db_user = annotations['postgresql.user']
+        db_name = annotations.get('postgresql.db')
+        db_user = annotations.get('postgresql.user')
+        
+        if db_name is not None and db_user is not None:
+            # The annotations exist and are not None
+            # Process the db_name and db_user variables here
+            print("db_name:", db_name)
+            print("db_user:", db_user)
+        else:
+            # The annotations are missing or None
+            # Handle this case accordingly
+            print("Annotations 'postgresql.db' or 'postgresql.user' are missing or None.")
 
-            # Perform your logic to create the PostgreSQL database here
-#            print(f"Creating PostgreSQL database: {db_name}, User: {db_user}")
-    else:
-        print("Nothing")
+    i += 1
 

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dbmanager
+  labels:
+    database: postgresql
+    
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: dbmanager
+        image: abolfazlyarian/database-manager
+      serviceAccountName: dbmanger
