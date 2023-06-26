@@ -1,6 +1,9 @@
 from kubernetes import client, config, watch
 import logging
 # Load Kubernetes configuration from default location
+logging.basicConfig(
+    level=logging.INFO,
+)
 #config.load_kube_config(config_file="/home/user01/.kube/config")
 config.load_incluster_config()
 
@@ -16,7 +19,7 @@ stream = watch.Watch()
 
 # Iterate through events
 i = 0
-print("---------------------- Running ------------------")
+logging.info("---------------------- Running ------------------")
 for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
     # print("---------------------- Running ------------------")
     # Check if the event is of type 'ADDED' or 'MODIFIED'
@@ -38,12 +41,12 @@ for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
         if db_name is not None and db_user is not None:
             # The annotations exist and are not None
             # Process the db_name and db_user variables here
-            print("db_name:", db_name)
-            print("db_user:", db_user)
+            logging.info("db_name: %s", db_name)
+            logging.info("db_user: %s", db_user)
         else:
             # The annotations are missing or None
             # Handle this case accordingly
-            print("Annotations 'postgresql.db' or 'postgresql.user' are missing or None.")
+            logging.info("Annotations 'postgresql.db' or 'postgresql.user' are missing or None.")
 
     i += 1
 
