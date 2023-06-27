@@ -1,10 +1,10 @@
 import psycopg2
 
 
-def psql_connection(db_name="postgres", db_user='postgres', db_pass='1376920'):
+def psql_connection(db_name="postgres", db_user='postgres', db_pass='1376920', host='127.0.0.1'):
 
     conn = psycopg2.connect(
-    database=db_name, user=db_user, password=db_pass, host='127.0.0.1', port= '5432'
+    database=db_name, user=db_user, password=db_pass, host=host, port= '5432'
     )
     conn.autocommit = True
 
