@@ -16,5 +16,5 @@ spec:
         app: test
     spec:
       containers:
-        - name: alpine-test
-          image: alpine
+        - name: nginx-test
+          image: nginx
