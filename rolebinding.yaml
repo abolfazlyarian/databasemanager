@@ -5,10 +5,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: dbmanger
-  namespace: default
-- kind: User
-  name: minikube
-  apiGroup: rbac.authorization.k8s.io
+  namespace: yarian
 roleRef:
   kind: Role
   name: namespace-watcher

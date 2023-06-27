@@ -11,14 +11,12 @@ config.load_incluster_config()
 api_instance = client.AppsV1Api()
 
 # Define the namespace and resource type to watch
-namespace = 'default'
-resource_type = 'deployments'
+namespace = 'yarian'
 
 # Watch for events in the specified namespace and resource type
 stream = watch.Watch()
 
 # Iterate through events
-i = 0
 logging.info("---------------------- Running ------------------")
 for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
     # print("---------------------- Running ------------------")
@@ -47,6 +45,3 @@ for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
             # The annotations are missing or None
             # Handle this case accordingly
             logging.info("Annotations 'postgresql.db' or 'postgresql.user' are missing or None.")
-
-    i += 1
-
