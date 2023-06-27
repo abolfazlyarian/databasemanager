@@ -1,5 +1,6 @@
 from kubernetes import client, config, watch
 import logging
+import postgres_management as pm
 # Load Kubernetes configuration from default location
 logging.basicConfig(
     level=logging.INFO,
@@ -41,6 +42,13 @@ for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
             # Process the db_name and db_user variables here
             logging.info("db_name: %s", db_name)
             logging.info("db_user: %s", db_user)
+            
+            conn = pm.create_database(
+                db_name='postgresql-headless.default.svc.cluster.local',
+                db_user='postgres',
+                db_pass='postgres'
+                )
+            
         else:
             # The annotations are missing or None
             # Handle this case accordingly
