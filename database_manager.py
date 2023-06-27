@@ -43,11 +43,17 @@ for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
             logging.info("db_name: %s", db_name)
             logging.info("db_user: %s", db_user)
             
-            conn = pm.create_database(
-                db_name='postgresql-headless.default.svc.cluster.local',
+            conn = pm.psql_connection(
+                db_name='postgres',
                 db_user='postgres',
-                db_pass='postgres'
+                db_pass='postgres',
+                host='postgresql-headless.default.svc.cluster.local'
                 )
+        
+            cursor = conn.cursor()
+            pm.create_database(cursor, db_name=db_name, db_user=db_user, db_pass='12345')
+            conn.close()
+            logging.info("----------- Creating Database for %s --------------", db_name)
             
         else:
             # The annotations are missing or None
