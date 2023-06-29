@@ -45,14 +45,16 @@ for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
                                             db_pass='postgres',
                                             host='postgresql-headless.default.svc.cluster.local'
                                          )
-            except Exception as e:
-                logging.error("Failed to connect to the database: %s", str(e))
+                # create database
+                cursor = conn.cursor()
+                db_pass = os.environ.get('DB_PASS', default='12345')
+                pm.create_database(cursor, db_name=db_name, db_user=db_user, db_pass=db_pass)
+                conn.close()
 
-            # create database
-            cursor = conn.cursor()
-            db_pass = os.environ.get('DB_PASS', default='12345')
-            pm.create_database(cursor, db_name=db_name, db_user=db_user, db_pass=db_pass)
-            conn.close()
+            except Exception as e:
+                logging.error(str(e))
+
+            
             
             # check the databases is created or not
             try:
