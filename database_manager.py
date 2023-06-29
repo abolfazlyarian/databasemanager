@@ -5,7 +5,7 @@ import os
 
 logging.basicConfig(
     level=logging.INFO,
-    format='[%(asctime)s] --> %(message)s \n'
+    format='[%(asctime)s] --> %(message)s'
 )
 logging.info("---------------------- Running ------------------")
 
@@ -51,23 +51,21 @@ for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
                 pm.create_database(cursor, db_name=db_name, db_user=db_user, db_pass=db_pass)
                 conn.close()
 
+                # check the databases is created or not
+                try:
+                    conn = pm.psql_connection(
+                                                db_name=db_name,
+                                                db_user=db_user,
+                                                db_pass='12345',
+                                                host='postgresql-headless.default.svc.cluster.local'
+                                            )
+                    conn.close()
+                    logging.info("The %s database for the %s user has been created successfully", db_name, db_user)
+                except:
+                    logging.info("The %s database for the %s user has not been created successfully", db_name, db_user)
+
             except Exception as e:
                 logging.error(str(e))
-
-            
-            
-            # check the databases is created or not
-            try:
-                conn = pm.psql_connection(
-                                            db_name=db_name,
-                                            db_user=db_user,
-                                            db_pass='12345',
-                                            host='postgresql-headless.default.svc.cluster.local'
-                                         )
-                conn.close()
-                logging.info("The %s database for the %s user has been created successfully", db_name, db_user)
-            except:
-                logging.info("The %s database for the %s user has not been created successfully", db_name, db_user)
         
         else:
             logging.info("Annotations 'postgresql.db' or 'postgresql.user' are missing or None.")
