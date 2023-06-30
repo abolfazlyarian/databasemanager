@@ -1,0 +1,13 @@
+replicaCount: 1
+
+image:
+  repository: abolfazlyarian/database-manager
+  tag: latest
+
+env:
+  db_pass: "12345"
+  Namespace: yarian
+
+
+ServiceAccountName: dbmanager
+

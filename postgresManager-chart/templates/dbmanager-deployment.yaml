@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-dbmanager
+  labels:
+    database: postgresql
+    type: manager
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: {{ .Release.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        env:
+          - name: namespace
+            value: {{ .Values.env.Namespace }}
+          - name: DB_PASS
+            value: {{ .Values.env.db_pass }}
+      serviceAccountName: {{ .Values.ServiceAccountName }}
