@@ -30,5 +30,5 @@ spec:
           - name: namespace
             value: {{ .Values.env.Namespace }}
           - name: DB_PASS
-            value: {{ .Values.env.db_pass }}
+            value: "{{ .Values.env.db_pass }}"
       serviceAccountName: {{ .Values.ServiceAccountName }}
