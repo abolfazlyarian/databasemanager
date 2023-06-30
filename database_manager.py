@@ -40,10 +40,10 @@ for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
             # connect to database as superuser
             try:
                 conn = pm.psql_connection(
-                                            db_name='postgres',
-                                            db_user='postgres',
-                                            db_pass='postgres',
-                                            host='postgresql-headless.default.svc.cluster.local'
+                                            db_name= os.environ.get('POSTGRES_DB'),
+                                            db_user= os.environ.get('POSTGRES_USER'),
+                                            db_pass= os.environ.get('POSTGRES_PASSWORD'),
+                                            host= os.environ.get('POSTGRES_HOST')
                                          )
                 # create database
                 cursor = conn.cursor()
@@ -56,8 +56,8 @@ for event in stream.stream(api_instance.list_namespaced_deployment, namespace):
                     conn = pm.psql_connection(
                                                 db_name=db_name,
                                                 db_user=db_user,
-                                                db_pass='12345',
-                                                host='postgresql-headless.default.svc.cluster.local'
+                                                db_pass=db_pass,
+                                                host= os.environ.get('POSTGRES_HOST')
                                             )
                     conn.close()
                     logging.info("The %s database for the %s user has been created successfully", db_name, db_user)

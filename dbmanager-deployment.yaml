@@ -19,6 +19,14 @@ spec:
       - name: dbmanager
         image: abolfazlyarian/database-manager
         env:
+          - name: POSTGRES_DB 
+            value: postgres
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: postgres
+          - name: POSTGRES_HOST
+            value: postgresql-headless.default.svc.cluster.local
           - name: namespace
             value: yarian
           - name: DB_PASS
