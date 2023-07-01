@@ -22,9 +22,15 @@ spec:
           - name: POSTGRES_DB 
             value: {{ .Values.env.POSTGRES_DB }}
           - name: POSTGRES_USER
-            value: {{ .Values.env.POSTGRES_USER }}
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: postgres-user
           - name: POSTGRES_PASSWORD
-            value: {{ .Values.env.POSTGRES_PASSWORD }}
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: postgres-password
           - name: POSTGRES_HOST
             value: {{ .Values.env.POSTGRES_HOST }}
           - name: namespace
