@@ -20,11 +20,17 @@ spec:
         image: abolfazlyarian/database-manager
         env:
           - name: POSTGRES_DB 
-            value: postgres
+            value: postgers
           - name: POSTGRES_USER
-            value: postgres
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: postgres-user
           - name: POSTGRES_PASSWORD
-            value: postgres
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: postgres-password
           - name: POSTGRES_HOST
             value: postgresql-headless.default.svc.cluster.local
           - name: namespace
