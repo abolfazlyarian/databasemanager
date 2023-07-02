@@ -10,9 +10,6 @@ env:
   newPass: "12345"
   namespace: yarian
 
-
-serviceAccountName: dbmanager
-
 secret:
   user: cG9zdGdyZXM=
   password: cG9zdGdyZXM=
