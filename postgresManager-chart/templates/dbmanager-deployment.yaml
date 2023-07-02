@@ -20,21 +20,21 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         env:
           - name: POSTGRES_DB 
-            value: {{ .Values.env.POSTGRES_DB }}
+            value: {{ .Values.env.postgresName }}
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: postgres-secret
-                key: postgres-user
+                name: postgresSecret
+                key: postgresUser
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgres-secret
-                key: postgres-password
+                name: postgresSecret
+                key: postgresPassword
           - name: POSTGRES_HOST
-            value: {{ .Values.env.POSTGRES_HOST }}
+            value: {{ .Values.env.postgresHost }}
           - name: namespace
-            value: {{ .Values.env.Namespace }}
+            value: {{ .Values.env.namespace }}
           - name: DB_PASS
-            value: "{{ .Values.env.db_pass }}"
-      serviceAccountName: {{ .Values.ServiceAccountName }}
+            value: "{{ .Values.env.newPass }}"
+      serviceAccountName: {{ .Values.serviceAccountName }}

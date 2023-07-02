@@ -5,12 +5,14 @@ image:
   tag: latest
 
 env:
-  POSTGRES_DB: postgres
-  POSTGRES_HOST: postgresql-headless.default.svc.cluster.local
-  db_pass: "12345"
-  Namespace: yarian
+  postgresName: postgres
+  postgresHost: postgresql-headless.default.svc.cluster.local
+  newPass: "12345"
+  namespace: yarian
 
 
-ServiceAccountName: dbmanager
+serviceAccountName: dbmanager
 
-SecretName: postgres-secret
+secret:
+  user: cG9zdGdyZXM=
+  password: cG9zdGdyZXM=
