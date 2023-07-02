@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-dbmanager
+  name: {{ .Release.Name }}-manager
   labels:
     database: postgresql
     type: manager
@@ -24,12 +24,12 @@ spec:
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}
+                name: {{ .Release.Name }}-secret
                 key: postgresUser
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}
+                name: {{ .Release.Name }}-secret
                 key: postgresPassword
           - name: POSTGRES_HOST
             value: {{ .Values.env.postgresHost }}
@@ -37,4 +37,4 @@ spec:
             value: {{ .Values.env.namespace }}
           - name: DB_PASS
             value: "{{ .Values.env.newPass }}"
-      serviceAccountName: {{ .Release.Name }}
+      serviceAccountName: {{ .Release.Name }}-service
