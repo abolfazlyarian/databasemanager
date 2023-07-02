@@ -4,7 +4,7 @@ metadata:
   name: namespaceWatcherBinding
 subjects:
 - kind: ServiceAccount
-  name: {{ .Values.serviceAccountName }}
+  name: {{ .Release.Name }}
   namespace: {{ .Values.env.namespace }}
 roleRef:
   kind: Role
